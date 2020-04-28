@@ -1,0 +1,187 @@
+#!groovy
+//Declarative Pipeline
+
+pipeline {
+    agent any
+
+    parameters {
+  	    choice(name: 'skipUnitTest', choices: 'true\nfalse', description: 'do not execute unit test')
+  		choice(name: 'skipSonarQubeScan', choices: 'true\nfalse', description: 'do not scan code quality')
+  		choice(name: 'promoteToDev', choices: 'true\nfalse', description: 'Indicate if the build should be promoted to RWS via Artifactory.')
+  	}
+
+    triggers {
+        pollSCM('H */12 * * 1-5')
+        // cron('H 8-20/4 * * 1-5')
+    }
+
+    post {
+        success {
+            notifyBuild('SUCCESS')
+            // script {
+            //     wrap([$class: 'BuildUser']) {
+            //         mail to: "${BUILD_USER_EMAIL}",
+            //              subject: "PineLine '${env.JOB_NAME}' (${env.BUILD_NUMBER}) result",
+            //              body: "${env.BUILD_USER}'s pineline '${env.JOB_NAME}' (${env.BUILD_NUMBER}) run success,\nplease check from: ${env.BUILD_URL}"
+            //     }
+            // }
+        }
+        failure {
+            notifyBuild('FAILURE')
+        }
+        unstable {
+            notifyBuild('UNSTABLE')
+        }
+        always {
+            step([$class: 'Mailer',
+                notifyEveryUnstableBuild: true,
+                recipients: "bjkunch@cn.ibm.com",
+                sendToIndividuals: true])
+        }
+    }
+
+    stages {
+        stage('Preparation') {
+            steps {
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: '*/develop']],
+                    doGenerateSubmoduleConfigurations: false,
+                    extensions: [],
+                    submoduleCfg: [],
+                    userRemoteConfigs: [[credentialsId: 'sam.jira.credential',
+                    url: 'http://chenkun@192.168.0.121:7990/scm/web/stockmarket.git']]
+                ])
+            }
+        }
+        stage('Compile') {
+            steps {
+                script {
+            		if (env.skipUnitTest.toBoolean()) {
+                        gradlew('clean', 'classes')
+            		} else {
+            			gradlew('clean', 'classes', 'test')
+            		}
+                }
+            }
+        }
+        stage('Assemble') {
+            steps {
+                gradlew('assemble')
+                // stash includes: '**/build/libs/*.war', name: 'app'
+            }
+        }
+        stage('Promotion') {
+            steps {
+        //         timeout(time: 5, unit:'MINUTES') {
+        //             input 'Deploy to Production?'
+        //         }
+	            echo 'To do or not to do'
+	            script {
+	          		if (env.promoteToDev.toBoolean()) {
+	                    echo 'Upload war build to artifactory'
+	                    rtUpload (
+	                    	serverId: 'DrikusArti',
+	                        buildName: 'stockmarket',
+	                        // specPath: 'path/to/spec/relative/to/workspace/spec.json'
+	                        spec: """{
+	                            "files": [{
+	                              "pattern": "build/libs/stockmarket-backend.war",
+	                              "target": "gbs-my-team-maven-local/war-builds/"
+	                            }]
+	                        }""",
+	                        failNoOp: true
+	                    )
+	                } else {
+	                   echo 'Do not upload war build to artifactory.'
+	                }
+	            }
+            }
+        }
+        // stage('Deploy to local 169 Docker server') {
+            // environment {
+            //     DST_BZ_KEY = credentials('DST_BZ_KEY')
+            // }
+            // steps {
+                // unstash 'app'
+                // gradlew('sshRemoteDeployFromLocal')
+                // notifyBuild('SUCCESS')
+            // }
+        // }
+
+        stage('code quality scan') {
+            steps {
+                echo "codeAnalyze with SonarQube"
+                script {
+                    if (!env.skipSonarQubeScan.toBoolean()) {
+  	                    def scannerHome = tool 'SonarQube Scanner 4.0'
+  	                    sh """
+  	                        ${scannerHome}/bin/sonar-scanner \
+  	                              -Dsonar.projectKey=stockmarket-backend  \
+  	                              -Dsonar.projectName=stockmarket-backend \
+  	                              -Dsonar.login=80ff8406f6d7ef6fe7c1b14817ca450af9a23391  \
+  	                              -Dsonar.source=src/main  \
+  	                              -Dsonar.test=src/test    \
+  	                              -Dsonar.host.url=192.168.0.120:8081/sonarqube   \
+  	                              -Dsonar.sourceEncoding=UTF-8  \
+  	                              -Dsonar.java.binaries=${env.WORKSPACE}/build/classes/java/main
+  	                      """
+	                  }
+				        }
+            }
+        }
+
+        stage('deploy stockmarket backend package on local Docker container server') {
+            steps {
+                script {
+                    def remote = [:]
+                    remote.name = "oc4813661231.ibm.com"
+                    remote.host = "192.168.0.169"
+                    remote.allowAnyHosts = true
+                    withCredentials([usernamePassword(credentialsId: 'sam.docker.169.credential', passwordVariable: 'passwrod', usernameVariable: 'userName')]) {
+                        remote.user = userName
+                        remote.password = passwrod
+                        sshCommand remote: remote, command: 'docker stop stockmarket-backend'
+                        sshPut remote: remote, from: 'build/libs/stockmarket-backend.war', into: './Documents/stockmarket-backend/deployments'
+                        sshPut remote: remote, from: 'build/resources/main/messageResource/messages_en.properties', into: './Documents/stockmarket-backend/messageResource'
+                        sshCommand remote: remote, command: 'docker start stockmarket-backend'
+                    }
+                }
+            }
+        }
+    }
+}
+
+def gradlew(String... args) {
+    sh "./gradlew ${args.join(' ')} -s"
+}
+
+def notifyBuild(String buildStatus = 'STARTED') {
+    // build status of null means successful
+    buildStatus =  buildStatus ?: 'SUCCESS'
+
+    // Default values
+    def colorName = 'RED'
+    def colorCode = '#FF0000'
+    def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
+    def summary = "${subject} (${env.BUILD_URL})"
+    //def details = """<p>STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+    //<p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>"""
+
+    // Override default values based on build status
+    if (buildStatus == 'STARTED') {
+        color = 'BLUE'
+        colorCode = '#0000FF'
+    } else if (buildStatus == 'SUCCESS') {
+        color = 'GREEN'
+        colorCode = '#00FF00'
+    } else if (buildStatus == 'UNSTABLE') {
+        color = 'YELLOW'
+        colorCode = '#FFFF00'
+    } else if (buildStatus == 'FAILURE') {
+        color = 'RED'
+        colorCode = '#FF0000'
+    }
+    // Send notifications
+    slackSend (color: colorCode, message: summary)
+}

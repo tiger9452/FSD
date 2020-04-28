@@ -1,0 +1,40 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <a class="navbar-brand" href="javascript:void(0)">eStock Market</a>
+  <p-toast position="top-center"></p-toast>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto">
+      <li *ngIf="isSignin && !isAdmin" class="nav-item iaactive list-inline" style="cursor:pointer">
+        <a class="nav-link">IPOs</a>
+      </li>
+      <li *ngIf="isSignin && !isAdmin" class="nav-item list-inline" [class]="compareActive" style="cursor:pointer">
+        <a class="nav-link" [routerLink]="['/compare']">Compare Companies</a>
+      </li>
+      <li *ngIf="isSignin && !isAdmin" class="nav-item inactive list-inline" style="cursor:pointer">
+        <a class="nav-link">Compare Sectors</a>
+      </li>
+      <li *ngIf="isSignin && !isAdmin" class="nav-item list-inline" [class]="searchActive" style="cursor:pointer">
+        <a class="nav-link" [routerLink]="['/search']">Company Search</a>
+      </li>
+      <li *ngIf="isSignin && !isAdmin" class="nav-item list-inline" [class]="profileEditActive" style="cursor:pointer">
+        <a class="nav-link" [routerLink]="['/profile-edit']">My Profile</a>
+      </li>
+      
+      <li *ngIf="isSignin && isAdmin" class="nav-item iaactive list-inline" [class]="importActive" style="cursor:pointer">
+        <a class="nav-link" [routerLink]="['/import']">Import Data</a>
+      </li>
+      <li *ngIf="isSignin && isAdmin" class="nav-item list-inline" [class]="companyEditActive" style="cursor:pointer">
+        <a class="nav-link" [routerLink]="['/company-edit']">Manage Company</a>
+      </li>
+      <li *ngIf="isSignin && isAdmin" class="nav-item inactive list-inline" style="cursor:pointer">
+        <a class="nav-link">Manage Stock Exchange</a>
+      </li>
+      <li *ngIf="isSignin && isAdmin" class="nav-item iaactive list-inline" style="cursor:pointer">
+        <a class="nav-link">Update IPO Details</a>
+      </li>
+    </ul>
+    <form class="form-inline mt-2 mt-md-0">
+      <button *ngIf="!isSignin" class="btn btn-outline-primary" type="submit" [routerLink]="['/login']">login</button>
+      <button *ngIf="isSignin" class="btn btn-outline-secondary" type="submit" (click)="signOut()">logout</button>
+    </form>
+  </div>
+</nav>
