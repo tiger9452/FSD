@@ -1,0 +1,14 @@
+/Users/chenk/Documents/workspace/stockmarket/stockmarket-api/src/main/java/com/ibm/fsb/config/SwaggerConfig.java
+/Users/chenk/Documents/workspace/stockmarket/stockmarket-api/src/main/java/com/ibm/fsb/entities/enums/EUserType.java
+/Users/chenk/Documents/workspace/stockmarket/stockmarket-api/src/main/java/com/ibm/fsb/entities/StockExchange.java
+/Users/chenk/Documents/workspace/stockmarket/stockmarket-api/src/main/java/com/ibm/fsb/service/SectorClientServiceFallbackFactory.java
+/Users/chenk/Documents/workspace/stockmarket/stockmarket-api/src/main/java/com/ibm/fsb/util/EmailUtil.java
+/Users/chenk/Documents/workspace/stockmarket/stockmarket-api/src/main/java/com/ibm/fsb/entities/IpoDetail.java
+/Users/chenk/Documents/workspace/stockmarket/stockmarket-api/src/main/java/com/ibm/fsb/service/SectorClientService.java
+/Users/chenk/Documents/workspace/stockmarket/stockmarket-api/src/main/java/com/ibm/fsb/entities/AbstractEntityBean.java
+/Users/chenk/Documents/workspace/stockmarket/stockmarket-api/src/main/java/com/ibm/fsb/entities/User.java
+/Users/chenk/Documents/workspace/stockmarket/stockmarket-api/src/main/java/com/ibm/fsb/entities/Company.java
+/Users/chenk/Documents/workspace/stockmarket/stockmarket-api/src/main/java/com/ibm/fsb/util/JwtTokenUtil.java
+/Users/chenk/Documents/workspace/stockmarket/stockmarket-api/src/main/java/com/ibm/fsb/entities/Company2stockExchange.java
+/Users/chenk/Documents/workspace/stockmarket/stockmarket-api/src/main/java/com/ibm/fsb/entities/Sector.java
+/Users/chenk/Documents/workspace/stockmarket/stockmarket-api/src/main/java/com/ibm/fsb/entities/Stock.java

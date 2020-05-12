@@ -1,0 +1,3 @@
+com/ibm/fsb/SectorClient80FeignApp.class
+com/ibm/fsb/cfgbeans/ConfigBean.class
+com/ibm/fsb/controller/SectorControllerClient.class
