@@ -1,0 +1,17 @@
+{
+  "data": [ 
+      {"name": "Google", "code": "Google", "price": 983.32, "ceo": "Jonyndf", "sector": "Internet services"}, 
+      {"name": "Microsoft", "code": "MS", "price": 1237.18, "ceo": "Bill Gates", "sector": "software"}, 
+      {"name": "Alibaba", "code": "Ali", "price": 764.20, "ceo": "Jacky Ma", "sector": "software"}, 
+      {"name": "Amazon", "code": "Az", "price": 832.87, "ceo": "Kelly", "sector": "software"}, 
+      {"name": "IBM", "code": "IBM", "price": 287.76, "ceo": "Arvind Krishna", "sector": "software"}, 
+      {"name": "Facebook", "code": "FB", "price": 697.53, "ceo": "Zark", "sector": "software"}, 
+      {"name": "Apple", "code": "Apple", "price": 993.65, "ceo": "Jobs", "sector": "software"}, 
+      {"name": "GE", "code": "GE", "price": 837.87, "ceo": "John", "sector": "software"}, 
+      {"name": "HP", "code": "HP", "price": 197.37, "ceo": "Peter", "sector": "software"}, 
+      {"name": "DELL", "code": "DELL", "price": 119.04, "ceo": "Mike", "sector": "software"}, 
+      {"name": "Lenevo", "code": "Legend", "price": 109.74, "ceo": "liu chuan zhi", "sector": "software"}, 
+      {"name": "Bell", "code": "Bell", "price": 978.76, "ceo": "tom", "sector": "software"},
+      {"name": "State Bank of India", "code": "SBI", "price": 1876.37, "ceo": "ienhh", "sector": "Finance"}
+  ]
+}

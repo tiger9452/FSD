@@ -1,0 +1,4 @@
+com/ibm/fsb/SectorClient80App.class
+com/ibm/fsb/cfgbeans/ConfigBean.class
+com/ibm/fsb/controller/SectorControllerClient.class
+com/ibm/myrule/MySelfRule.class

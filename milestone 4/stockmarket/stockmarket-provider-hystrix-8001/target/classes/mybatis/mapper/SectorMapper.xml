@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ibm.fsb.dao.SectorDao">
+	<insert id="addSector" parameterType="Sector" useGeneratedKeys="true">
+		insert into sector(name, brief, db_source) values(#{name},#{brief},DATABASE())
+	</insert>
+	<select id="findById" resultType="Sector" parameterType="Long">
+		select id, name, brief, db_source from sector where id=#{id}
+	</select>
+
+	<select id="findAll" resultType="Sector">
+		select id, name, brief, db_source from sector
+	</select>
+</mapper>
