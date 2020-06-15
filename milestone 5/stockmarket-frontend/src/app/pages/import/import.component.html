@@ -1,0 +1,77 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <h1 class="h3 mb-3 font-weight-normal text-center">Import Date from Excel file</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <p-dropdown [options]="stockExchanges" [(ngModel)]="selectedExchange" dataKey="value" placeholder="Select Stock Exchange" autoWidth="false" [style]="{'width':'100%'}"></p-dropdown>
+    </div>
+    <div class="col-sm-5">
+      <p-fileUpload name="myfile[]" url="./upload.do" (onUpload)="onUpload($event)" maxFileSize="1000000" multiple="multiple"
+        accept=".xlsx,.xls">
+          <ng-template pTemplate="content">
+              <ul *ngIf="myfile.length">
+                  <li *ngFor="let file of myfile">{{file.name}} - {{file.size}} bytes</li>
+              </ul>
+          </ng-template>
+      </p-fileUpload>
+    </div>
+    <div class="col-sm-1">
+      <button type="button" class="btn btn-info" (click)="showUploadInfo()">
+      Upload
+      </button>
+    </div>
+    <div class="col-sm text-center">
+      <a href="assets/templates/sample_stock_data.xlsx">Click here to download sample Excel file</a>
+    </div>
+  </div>
+</div>
+<div class="container" *ngIf="showInfo">
+  <div class="row">
+    <div class="col-sm">
+      <h1 class="h3 mb-3 font-weight-normal text-center">Summary of upload</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm">
+      Company Name: 
+    </div>
+    <div class="col-sm">
+      State Bank of India
+    </div>
+    <div class="col-sm">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm">
+      Stock Exchange: 
+    </div>
+    <div class="col-sm">
+      BSE(Bombay Stock Exchange)
+    </div>
+    <div class="col-sm">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm">
+      Number of records imported: 
+    </div>
+    <div class="col-sm">
+      35
+    </div>
+    <div class="col-sm">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm">
+      From Date: 25/10/2019
+    </div>
+    <div class="col-sm">
+      To Date: 10/03/2020
+    </div>
+    <div class="col-sm">
+    </div>
+  </div>
+</div>

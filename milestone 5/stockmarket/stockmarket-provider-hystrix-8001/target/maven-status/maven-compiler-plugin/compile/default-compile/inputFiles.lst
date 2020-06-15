@@ -1,0 +1,7 @@
+/Users/chenk/Documents/workspace/stockmarket/stockmarket-provider-hystrix-8001/src/main/java/com/ibm/fsb/SectorProvider8001HystrixApp.java
+/Users/chenk/Documents/workspace/stockmarket/stockmarket-provider-hystrix-8001/src/main/java/com/ibm/fsb/dao/AbstractHibernateDao.java
+/Users/chenk/Documents/workspace/stockmarket/stockmarket-provider-hystrix-8001/src/main/java/com/ibm/fsb/dao/SectorDao.java
+/Users/chenk/Documents/workspace/stockmarket/stockmarket-provider-hystrix-8001/src/main/java/com/ibm/fsb/service/impl/SectorServiceImpl.java
+/Users/chenk/Documents/workspace/stockmarket/stockmarket-provider-hystrix-8001/src/main/java/com/ibm/fsb/dao/AbstractJpaDao.java
+/Users/chenk/Documents/workspace/stockmarket/stockmarket-provider-hystrix-8001/src/main/java/com/ibm/fsb/controller/SectorController.java
+/Users/chenk/Documents/workspace/stockmarket/stockmarket-provider-hystrix-8001/src/main/java/com/ibm/fsb/service/SectorService.java

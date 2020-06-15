@@ -1,0 +1,5 @@
+com/ibm/fsb/dao/SectorDao.class
+com/ibm/fsb/controller/SectorController.class
+com/ibm/fsb/service/SectorService.class
+com/ibm/fsb/SectorProvider8002App.class
+com/ibm/fsb/service/impl/SectorServiceImpl.class

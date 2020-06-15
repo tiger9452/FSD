@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-auto">
+      <p-dropdown [options]="stockExchanges" [(ngModel)]="selectedExchange" dataKey="value" placeholder="Select Stock Exchange" autoWidth="false" [style]="{'width':'100%'}"></p-dropdown>
+    </div>
+    <div class="col-lg-auto">
+      <p-multiSelect #chooseTwoCompanies [options]="companies" [panelStyle]="{minWidth:'20em'}" [(ngModel)]="selectedCompanies" autoWidth="false" [style]="{'width': '200px'}" optionLabel="label" filterPlaceHolder="Select Company" selectionLimit="2"></p-multiSelect>
+    </div>
+    <div class="col col-lg-3">
+      <button type="button" class="btn btn-primary" (click)="generateChart()"
+        tooltip="according to your choice to generate bar chart.">
+      Generate Chart
+      </button>
+    </div>
+    <div class="col col-lg-3">  
+      <button type="button" class="btn btn-info" 
+        tooltip="download the backend data for this diagram in Excel file format.">
+      Download Data
+      </button>
+    </div>
+  </div>
+</div>
+<div class="radioGroup">
+  <label for="preopt1">Period: </label>
+  <p-radioButton name="period" value="W" label="Week" [(ngModel)]="selectedPeriod" inputId="preopt1"></p-radioButton>
+  <p-radioButton name="period" value="M" label="Month" [(ngModel)]="selectedPeriod" inputId="preopt2"></p-radioButton>
+  <p-radioButton name="period" value="Q" label="Qauter" [(ngModel)]="selectedPeriod" inputId="preopt3"></p-radioButton>
+  <p-radioButton name="period" value="Y" label="Year" [(ngModel)]="selectedPeriod" inputId="preopt4"></p-radioButton>
+  |&nbsp;&nbsp;&nbsp;
+  From: 
+  <p-calendar [(ngModel)]="fromDate" view="month" dateFormat="mm/yy" [showIcon]="true" [yearNavigator]="true" yearRange="2000:2030" [readonlyInput]="true"></p-calendar>
+  To:
+  <p-calendar [(ngModel)]="toDate" view="month" dateFormat="mm/yy" [showIcon]="true" [yearNavigator]="true" yearRange="2000:2030" [readonlyInput]="true"></p-calendar>
+</div>
+<fusioncharts
+  [width]="width"
+  [height]="height"
+  [type]="type"
+  [dataFormat]="dataFormat"
+  [dataSource]="dataSource"
+>
+</fusioncharts>
