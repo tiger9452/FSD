@@ -1,2 +1,0 @@
-INSERT INTO users (name, password, email_addr, mobile_number, type, onetime_code, confirmed, db_source) VALUES ('sam1', '$2a$10$4cWU1CNWKnEghI.QeLxqDOiJuUAYfolagPNrUba5cg10dZy0V5jNm', 'tiger9452@163.com', '18571562153', 'admin', UUID(), true, database());
-INSERT INTO users (name, password, email_addr, mobile_number, type, onetime_code, confirmed, db_source) VALUES ('tom1', '$2a$10$VRtz2YFHIGgyUY041GVkNOkaQYmM9ZCqbsdfgg23f5OBYdplD.rPG', 'tiger9452@163.com', '18571562153', 'investor', UUID(), false, database());
