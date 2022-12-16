@@ -28,7 +28,7 @@
     "angular-fusioncharts": "^3.0.4",
     "angular-in-memory-web-api": "^0.10.0",
     "bootstrap": "^4.4.1",
-    "express": "~4.14.0",
+    "express": "~4.17.3",
     "font-awesome": "^4.7.0",
     "fusioncharts": "^3.15.1-sr.1",
     "ngx-bootstrap": "^5.6.1",
